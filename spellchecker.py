@@ -1,6 +1,6 @@
 import time
-
 import multiDictionary as md
+
 
 class SpellChecker:
 
@@ -8,11 +8,28 @@ class SpellChecker:
         pass
 
     def handleSentence(self, txtIn, language):
-        pass
+        multiD = md.MultiDictionary()
+        frase = txtIn.split(" ")
+        lista = []
+        i = 0
+        time1 = time.time()
+        for parola in frase:
+            parola = replaceChars(parola)
+            lista = multiD.searchWordDichotomic(parola, language)
+        time2 = time.time()
+        for element in lista:
+            if element.corretta:
+                pass
+            else:
+                print(element)
+                i += 1
+        print(f"{i} errori!")
+        print(f"Tempo di esecuzione: {time2 - time1}")
+        print("------------------------------")
 
     def printMenu(self):
         print("______________________________\n" +
-              "      SpellChecker 101\n"+
+              "      SpellChecker 101\n" +
               "______________________________\n " +
               "Seleziona la lingua desiderata\n"
               "1. Italiano\n" +
@@ -23,4 +40,8 @@ class SpellChecker:
 
 
 def replaceChars(text):
-    pass
+    chars = "\\/`*_{}[]()>#+-.!$%^;,=_~"
+    for c in chars:
+        text = text.replace(c, "")
+        text = text.lower()
+    return text
